@@ -1,4 +1,4 @@
-FROM golang
+ FROM golang
 
 RUN apt-get update && \
     apt-get install -y vim git && \
@@ -9,7 +9,7 @@ RUN apt-get update && \
 COPY myvimrc /root/.vimrc
 
 # Vimを起動してプラグインをインストール
-RUN vim -c "source ~/.vimrc" -c "PlugInstall" -c "GoInstallBinaries" -c "qa!"
+RUN vim -Es -u NONE -c "source $HOME/.vimrc" -c "PlugInstall --sync | exit 0"  -c "qa!"
 
-# コンテナ起動時にvimを実行したい場合は、CMDを指定
-CMD ["vim"] 
+# コンテナ起動後に以下のコマンドが必要
+# vim -c "GoInstallBinaries"
