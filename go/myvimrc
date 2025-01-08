@@ -4,6 +4,9 @@ call plug#begin()
 " vim-goプラグインのインストールとバイナリインストール
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
+" coc.nvimプラグインのインストール
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " ファイル編集時に自動保存を有効にする
@@ -14,6 +17,12 @@ set t_Co=256
 
 " 行番号を表示する
 set number
+
+" エンコード
+set enc=utf-8
+
+" Return で補完の決定
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 " vim-goのエラー/警告表示にQuickfixリストを使用する
 let g:go_list_type = "quickfix"
