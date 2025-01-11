@@ -7,6 +7,12 @@ Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 " coc.nvimプラグインのインストール
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" ultisnipsプラグインのインストール
+Plug 'SirVer/ultisnips'
+
+" splitjoinプラグインのインストール
+Plug 'AndrewRadev/splitjoin.vim'
+
 call plug#end()
 
 " ファイル編集時に自動保存を有効にする

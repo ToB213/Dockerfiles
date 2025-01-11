@@ -1,17 +1,41 @@
-FROM golang
+FROM ubuntu:latest
 
-RUN apt-get update -y && \
-    apt-get install -y vim git nodejs npm && \
-    mkdir -p ~/.vim/autoload && \
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-    git clone https://github.com/fatih/vim-go.git ~/.vim/plugged/vim-go && \
-    npm install -g yarn
+RUN apt-get update -y \
+    && apt-get install -y \
+    software-properties-common \ 
+    curl \
+    git \
+    neovim \
+    nodejs \
+    npm \
+    python3-pip \
+    python3 \
+    && apt-get clean \ 
+    && rm -rf /var/lib/apt/lists/* 
 
-COPY myvimrc /root/.vimrc
-COPY coc-settings.json /root/.vim/coc-settings.json
+RUN add-apt-repository ppa:longsleep/golang-backports -y \ 
+    && apt-get update -y \
+    && apt-get install -y golang-go \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Vimを起動してプラグインをインストール
-RUN vim -Es -u NONE -c "source $HOME/.vimrc" -c "PlugInstall --sync | exit 0"  -c "qa!"
+ENV GOPATH=/root/go
+ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
-# コンテナ起動後に以下のコマンドが必要
-# vim -c "GoInstallBinaries"
+RUN mkdir -p /root/.config/nvim/ \
+    && mkdir -p /root/.local/share/nvim/plugged \
+    && mkdir -p $GOPATH
+
+RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+COPY myvimrc /root/.config/nvim/init.vim
+COPY coc-settings.json /root/.config/nvim/coc-settings.json 
+
+
+RUN nvim -u /root/.config/nvim/init.vim +PlugInstall +qall
+
+RUN npm install -g yarn
+
+RUN mkdir -p /root/src
+
+WORKDIR /root/src
