@@ -33,15 +33,6 @@ RUN add-apt-repository ppa:neovim-ppa/stable -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# --- または ---
-# NeovimをPPAからインストール (unstable版 - 最新版だが安定性は低い)
-# RUN add-apt-repository ppa:neovim-ppa/unstable -y \
-#     && apt-get update -y \
-#     && apt-get install -y neovim \
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
-
-
 ENV GOPATH=/root/go
 ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 ENV NODE_ENV=development
@@ -60,9 +51,6 @@ COPY coc-settings.json /root/.config/nvim/coc-settings.json
 
 # Neovimプラグインをインストール
 RUN nvim -u /root/.config/nvim/init.vim +PlugInstall +qall
-
-# yarnをグローバルインストール
-RUN npm install -g yarn
 
 # srcディレクトリを作成
 RUN mkdir -p /root/src
