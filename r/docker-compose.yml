@@ -1,0 +1,15 @@
+services:
+  rstudio:
+    build:
+      dockerfile: Dockerfile
+    image: rstudio
+    container_name: maprstudio
+    ports:
+      - 8787:8787
+    environment:
+      PASSWORD: map
+      TZ: Asia/Tokyo
+    tty: true
+    stdin_open: true
+    # volumes:
+    # - $##任意のディレクトリ##:/home/rstudio
