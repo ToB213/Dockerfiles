@@ -46,8 +46,8 @@ RUN mkdir -p $GOPATH \
 RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # 設定ファイルをコピー
-COPY  /home/tob/dotfiles/docker/go/init.vim /root/.config/nvim/init.vim
-COPY /home/tob/dotfiles/docker/go/coc-settings.json /root/.config/nvim/coc-settings.json
+COPY ./init.vim /root/.config/nvim/init.vim
+COPY ./coc-settings.json /root/.config/nvim/coc-settings.json
 
 # Neovimプラグインをインストール
 RUN nvim -u /root/.config/nvim/init.vim +PlugInstall +qall

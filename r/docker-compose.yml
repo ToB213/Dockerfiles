@@ -11,5 +11,3 @@ services:
       TZ: Asia/Tokyo
     tty: true
     stdin_open: true
-    # volumes:
-    # - $##任意のディレクトリ##:/home/rstudio

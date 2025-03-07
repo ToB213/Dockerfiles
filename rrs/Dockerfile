@@ -1,8 +1,8 @@
-# Debianは2025年現在安定版のbookwormを使用
+# イメージはOpenJDKが17で，Debianは古すぎず安定してそうなのを選んだ
 # 最新の安定版およびコードネームについては 
 # https://www.debian.org/releases/index.ja.html 
 # を確認
-FROM openjdk:17-jdk-bookworm
+FROM openjdk:17-jdk-buster
 
 WORKDIR /app
 
